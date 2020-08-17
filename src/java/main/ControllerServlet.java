@@ -3,6 +3,7 @@ package main;
 import java.io.*;
 import java.util.List;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -42,8 +43,14 @@ public class ControllerServlet extends HttpServlet {
                 case "/new":
                     showNewForm(request, response);
                     break;
+                case "/newList":
+                    showNewFormMultiple(request, response);
+                    break;
                 case "/insert":
                     insertUser(request, response);
+                    break;
+                case "/insertList":
+                    insertUserMultiple(request, response);
                     break;
                 case "/delete":
                     deleteUser(request, response);
@@ -77,10 +84,30 @@ public class ControllerServlet extends HttpServlet {
         rd.forward(request, response);        
     }
     
+    
+    private void showNewFormMultiple(HttpServletRequest request, HttpServletResponse response) 
+            throws SQLException, IOException, ServletException{
+        RequestDispatcher rd = request.getRequestDispatcher("MultipleUserForm.jsp");
+        rd.forward(request, response);        
+    }
+    
     private void insertUser(HttpServletRequest request, HttpServletResponse response) 
             throws SQLException, IOException, ServletException{
         User user = new User(request.getParameter("firstName"), request.getParameter("lastName"), request.getParameter("address"));
         userDAO.addUser(user);
+        response.sendRedirect("list");
+    }
+    
+    private void insertUserMultiple(HttpServletRequest request, HttpServletResponse response) 
+            throws SQLException, IOException, ServletException{
+        List<User> user = new ArrayList<>();
+        String[] firstName = request.getParameterValues("firstName");
+        String[] lastName = request.getParameterValues("lastName");
+        String[] address = request.getParameterValues("address");
+        for (int i = 0; i < firstName.length; i++) {
+            user.add(new User(firstName[i], lastName[i], address[i]));            
+        }
+        userDAO.addUserMultiple(user);
         response.sendRedirect("list");
     }
     

@@ -60,7 +60,21 @@ public class UserDAO {
         disconnect();
         return rowInserted;
     }
-    
+
+
+    /* Inserts a new user */
+    public void addUserMultiple(List<User> user) throws SQLException {
+        connect();
+        Statement pstmt = jdbcConnection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+        for (User obj : user) {
+            String sql = "INSERT INTO user (first_name, last_name, address) VALUES('"+obj.getFirstName()+"', '"+obj.getLastName()+"', '"+obj.getAddress()+"');";
+            pstmt.addBatch(sql);
+        }
+        pstmt.executeBatch();
+        pstmt.close();
+        disconnect();
+    }
+
     /* Show list of all users */
     public List<User> listUsers() throws SQLException {
         List<User> userList = new ArrayList<>();
@@ -69,7 +83,7 @@ public class UserDAO {
 
         Statement stmt = jdbcConnection.createStatement();
         ResultSet rs = stmt.executeQuery(sql);
-        
+
         while (rs.next()) {
             userList.add(new User(rs.getInt("id"), rs.getString("first_name"), rs.getString("last_name"), rs.getString("address")));
         }
@@ -77,7 +91,7 @@ public class UserDAO {
         disconnect();
         return userList;
     }
-    
+
     /* Deletes a user */
     public boolean deleteUser(User user) throws SQLException {
         String sql = "DELETE FROM user WHERE id=?;";
@@ -91,7 +105,7 @@ public class UserDAO {
         disconnect();
         return rowDeleted;
     }
-    
+
     /* Update a user */
     public boolean updateUser(User user) throws SQLException {
         String sql = "UPDATE user SET first_name = ?, last_name = ?, address = ? WHERE id=?;";
@@ -108,8 +122,7 @@ public class UserDAO {
         disconnect();
         return rowUpdated;
     }
-    
-    
+
     /* Retrieve a user */
     public User getUser(int id) throws SQLException {
         String sql = "SELECT * FROM user WHERE id=?;";
@@ -127,5 +140,5 @@ public class UserDAO {
         disconnect();
         return user;
     }
-    
+
 }

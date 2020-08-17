@@ -5,17 +5,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>List of Users</title>
- <!--       <link href="css/datatables.css" rel="stylesheet" />
-        <link href="css/jquery.dataTables.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="css/bootstrap.min.css">         
-        <script type="text/javascript" src="js/jquery-3.5.1.min.js" ></script> 
-        <script type="text/javascript" src="js/jquery.dataTables.min.js" ></script>
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>     -->
-        <link href="css/datatables.css" rel="stylesheet" />
-        <link href="css/jquery.dataTables.min.css" rel="stylesheet" />
-        <script type="text/javascript" src="js/jquery-3.5.1.min.js" ></script>
-        <script type="text/javascript" src="js/jquery.dataTables.min.js" ></script>
+        <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" ></script>
         <script type="text/javascript">
             $(document).ready(function() {
                 $("#user-table").DataTable();
@@ -27,6 +19,7 @@
         <h1>User Management</h1>
         <h2>
             <a href="new">Add User</a>&nbsp;&nbsp;&nbsp;
+            <a href="newList">Add Multiple Users</a>&nbsp;&nbsp;&nbsp;
             <a href="list">Show all users</a>
         </h2>
     </center>
